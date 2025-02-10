@@ -3,6 +3,9 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/nodemailer";
 import { db } from "@/server/db";
+import { Email } from "@/emails/verification-request";
+import { env } from "@/env";
+import { Resend } from "resend";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -25,6 +28,8 @@ declare module "next-auth" {
   // }
 }
 
+const resend = new Resend(env.EMAIL_SERVER_PASSWORD);
+
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
@@ -34,18 +39,26 @@ export const authConfig = {
   providers: [
     EmailProvider({
       server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
+        host: env.EMAIL_SERVER_HOST,
+        port: env.EMAIL_SERVER_PORT,
         auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
+          user: env.EMAIL_SERVER_USER,
+          pass: env.EMAIL_SERVER_PASSWORD,
         },
       },
-      from: process.env.EMAIL_FROM,
+      from: env.EMAIL_FROM,
+      async sendVerificationRequest({ identifier: email, url }) {
+        await resend.emails.send({
+          from: env.EMAIL_FROM,
+          to: [email],
+          subject: "Sign in to IAESTE Jobrasing",
+          react: Email({ url }),
+        });
+      },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
   adapter: PrismaAdapter(db),
