@@ -1,0 +1,28 @@
+model Organisation {
+    id   String @id @default(cuid())
+    name String @unique
+
+    participants User[]
+    campaigns    Campaign[]
+    companies    Company[]
+    contacts     Contact[]
+}
+
+model Campaign {
+    id   String @id @default(cuid())
+    name String @unique
+
+    endDate DateTime?
+
+    organisationId String
+    organisation   Organisation @relation(fields: [organisationId], references: [id])
+
+    companies   Company[]
+    contacts    Contact[]
+    calls       Call[]
+    meetings    Meeting[]
+    internships Internship[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

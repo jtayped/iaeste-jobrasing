@@ -1,0 +1,20 @@
+enum FileParent {
+    Meeting
+    Call
+    Internship
+}
+
+model File {
+    id       String @id @default(uuid())
+    filename String
+    path     String
+    mimetype String
+    size     Int
+
+    parentModel FileParent?
+    parentId    String?
+
+    meeting    Meeting?    @relation(fields: [parentId], references: [id], map: "meetingFile")
+    call       Call?       @relation(fields: [parentId], references: [id], map: "callFile")
+    internship Internship? @relation(fields: [parentId], references: [id], map: "internshipFile")
+}
