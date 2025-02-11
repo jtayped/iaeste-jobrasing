@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import RootProviders from "./providers";
+import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
   title: "IAESTE Jobrasing",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <RootProviders>{children}</RootProviders>
+        <TRPCReactProvider>
+          <RootProviders>{children}</RootProviders>
+        </TRPCReactProvider>
       </body>
     </html>
   );
