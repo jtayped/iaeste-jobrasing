@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 
-import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 import { type Metadata } from "next";
 import RootProviders from "./providers";
 import { TRPCReactProvider } from "@/trpc/react";
@@ -11,12 +11,14 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+const inter = Inter({ weight: "variable", subsets: ["latin"] });
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
+    <html lang="en">
+      <body className={`${inter.className}`}>
         <TRPCReactProvider>
           <RootProviders>{children}</RootProviders>
         </TRPCReactProvider>
