@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { SidebarFooter } from "../ui/sidebar";
+import { SidebarFooter, useSidebar } from "../ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -12,8 +12,11 @@ import { ChevronDown, Plus } from "lucide-react";
 import { useOrganisations } from "@/hooks/use-organisations";
 
 const SidebarHeaderComponent = () => {
+  const { state } = useSidebar();
   const { selectedOrganisation, myOrganisations, isLoading, error } =
     useOrganisations();
+
+  if (state === "collapsed") return;
 
   // TODO: modify these state
   if (isLoading) return <p>Loading...</p>;
@@ -25,7 +28,7 @@ const SidebarHeaderComponent = () => {
     <SidebarFooter>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant={"outline"} className="justify-between">
+          <Button variant={"outline"} size={"lg"} className="justify-between">
             <div />
             {selectedOrganisation
               ? selectedOrganisation.name
@@ -40,7 +43,7 @@ const SidebarHeaderComponent = () => {
             ))
           ) : (
             <DropdownMenuItem asChild>
-              <Button variant={"ghost"}>
+              <Button>
                 <Plus />
                 Join an organisation
               </Button>
