@@ -1,8 +1,8 @@
 import React from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/sidebar";
 import FunctionalProviders from "./providers";
 import GeneralLayout from "@/components/layouts/general";
+import AppHeader from "@/components/header";
 
 const FunctionalLayout = async ({
   children,
@@ -12,12 +12,10 @@ const FunctionalLayout = async ({
   return (
     <FunctionalProviders>
       <AppSidebar />
-      <main>
-        <GeneralLayout>
-          <SidebarTrigger />
-          {children}
-        </GeneralLayout>
-      </main>
+      <GeneralLayout>
+        <AppHeader />
+        <main className="mt-7">{children}</main>
+      </GeneralLayout>
     </FunctionalProviders>
   );
 };
