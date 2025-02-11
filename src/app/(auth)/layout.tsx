@@ -1,7 +1,8 @@
+import CenteredLayout from "@/components/layouts/centered";
 import React from "react";
 
-const AuthLayout = () => {
-  return <div>AuthLayout</div>;
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+  return <CenteredLayout>{children}</CenteredLayout>;
 };
 
 export default AuthLayout;

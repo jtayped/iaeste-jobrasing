@@ -2,6 +2,7 @@ import React from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/sidebar";
 import FunctionalProviders from "./providers";
+import GeneralLayout from "@/components/layouts/general";
 
 const FunctionalLayout = async ({
   children,
@@ -12,8 +13,10 @@ const FunctionalLayout = async ({
     <FunctionalProviders>
       <AppSidebar />
       <main>
-        <SidebarTrigger />
-        {children}
+        <GeneralLayout>
+          <SidebarTrigger />
+          {children}
+        </GeneralLayout>
       </main>
     </FunctionalProviders>
   );
