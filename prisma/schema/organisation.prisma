@@ -12,10 +12,10 @@ model Campaign {
     id   String @id @default(cuid())
     name String @unique
 
-    endDate DateTime?
+    startDate DateTime
+    endDate   DateTime
 
-    organisationId String
-    organisation   Organisation @relation(fields: [organisationId], references: [id])
+    organisations Organisation[]
 
     companies   Company[]
     contacts    Contact[]
