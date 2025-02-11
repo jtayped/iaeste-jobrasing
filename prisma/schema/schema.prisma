@@ -59,6 +59,12 @@ model User {
     assignedCalls       Call[]
     assignedMeetings    Meeting[]
     assignedInternships Internship[]
+
+    notificationsReceived Notification[] @relation("NotificationsReceived")
+    notificationsSent     Notification[] @relation("NotificationsSent")
+
+    todos     Todo[] @relation("TodosReceived")
+    todosSent Todo[] @relation("TodosSent")
 }
 
 model VerificationToken {
