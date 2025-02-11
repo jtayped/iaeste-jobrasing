@@ -36,7 +36,6 @@ export const authConfig = {
   },
   pages: {
     signIn: "/signin",
-    verifyRequest: "/verify",
     newUser: "/new-user",
   },
   providers: [
